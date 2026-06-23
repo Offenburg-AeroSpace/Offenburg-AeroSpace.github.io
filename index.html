@@ -150,6 +150,37 @@
       50%      { transform: translateX(-50%) translateY(7px); }
     }
 
+    /* ══ MOBILE HERO ══ */
+    @media (max-width: 540px) {
+      .hero {
+        /* less top padding so image fills more of the screen */
+        padding: calc(var(--nav-h) + 1.5rem) 1rem 5rem;
+        justify-content: flex-end; /* push text toward bottom, image shows above */
+        min-height: 100svh;
+      }
+      .hero-bg {
+        /* shift left to bring sun into frame; slight upward bias for earth limb */
+        background-position: 22% 18%;
+        inset: -10%; /* less parallax room on mobile */
+      }
+      .hero-overlay {
+        /* stronger bottom fade so text stays legible */
+        background: linear-gradient(
+          to bottom,
+          rgba(9,8,13,.25) 0%,
+          rgba(9,8,13,.1)  30%,
+          rgba(9,8,13,.55) 60%,
+          var(--bg) 100%
+        );
+      }
+      .hero-eyebrow { font-size: .6rem; margin-bottom: .75rem; letter-spacing: .18em; }
+      .hero-we-are  { font-size: .95rem; letter-spacing: .3em; }
+      .hero-title   { font-size: clamp(2.8rem, 16vw, 4rem); margin-bottom: 1rem; }
+      .hero-sub     { font-size: .82rem; margin-bottom: 1.75rem; }
+      .btn          { padding: .6rem 1.3rem; font-size: .75rem; }
+      .scroll-hint  { bottom: 1.5rem; }
+    }
+
     /* ══ SECTION ══ */
     section { position: relative; z-index: 1; padding: 6rem 1.5rem; }
     .container { max-width: 1100px; margin: 0 auto; }
