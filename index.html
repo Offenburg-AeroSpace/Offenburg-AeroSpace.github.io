@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offenburg AeroSpace</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --clr-bg:      #08090d;
+      --clr-surface: #12141c;
+      --clr-card:    #1a1d2e;
+      --clr-border:  #2a2d42;
+      --clr-accent:  #4f8ef7;
+      --clr-accent2: #a78bfa;
+      --clr-text:    #e8eaf0;
+      --clr-muted:   #7b7f9e;
+      --radius:      14px;
+      --nav-h:       64px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(8,9,13,0.75);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--clr-border);
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: var(--clr-text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--clr-accent); }
+
+    /* hamburger */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 26px;
+      height: 18px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .hamburger span {
+      display: block;
+      height: 2px;
+      background: var(--clr-text);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* slide-out menu */
+    .nav-drawer {
+      position: fixed;
+      top: var(--nav-h); right: 0;
+      width: min(320px, 90vw);
+      height: calc(100vh - var(--nav-h));
+      background: rgba(18,20,28,0.97);
+      backdrop-filter: blur(20px);
+      border-left: 1px solid var(--clr-border);
+      transform: translateX(100%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      z-index: 99;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .nav-drawer.open { transform: translateX(0); }
+
+    .nav-drawer a {
+      color: var(--clr-text);
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: .75rem 1rem;
+      border-radius: 8px;
+      transition: background .2s;
+    }
+    .nav-drawer a:hover { background: var(--clr-card); }
+    .nav-drawer .drawer-label {
+      color: var(--clr-muted);
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: 1rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: calc(var(--nav-h) + 2rem) 1.5rem 4rem;
+      overflow: hidden;
+    }
+
+    /* placeholder until real image is dropped in */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 110%, #1a3a6e55 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 10%, #4f8ef720 0%, transparent 60%),
+        #08090d;
+      z-index: 0;
+    }
+    /* stars */
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 12% 8%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 34% 22%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 5%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 72% 18%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 7%, #fff 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 23% 42%, #ffffffcc 0%, transparent 100%),
+        radial-gradient(1px 1px at 64% 38%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 33%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 55%, #fff 0%, transparent 100%),
+        radial-gradient(2px 2px at 47% 50%, #ffffffaa 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 62%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 75%, #fff 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 38% 80%, #ffffffcc 0%, transparent 100%),
+        radial-gradient(1px 1px at 93% 85%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 92%, #fff 0%, transparent 100%);
+      opacity: .7;
+    }
+
+    /* once the user adds a real image: */
+    /* .hero-bg { background-image: url('hero.jpg'); background-size: cover; background-position: center; } */
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(8,9,13,.3) 0%, rgba(8,9,13,.6) 70%, var(--clr-bg) 100%);
+      z-index: 1;
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero-eyebrow {
+      font-size: .85rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--clr-accent);
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title .highlight { color: var(--clr-accent); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--clr-muted);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: .75rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--clr-accent);
+      color: #fff;
+      box-shadow: 0 0 24px #4f8ef755;
+    }
+    .btn-primary:hover { box-shadow: 0 0 36px #4f8ef788; }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      color: var(--clr-muted);
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      animation: bob 2s ease-in-out infinite;
+    }
+    .scroll-hint svg { width: 20px; height: 20px; stroke: var(--clr-muted); fill: none; }
+    @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+    /* ── Section wrapper ── */
+    section { padding: 5rem 1.5rem; }
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--clr-muted);
+      margin-bottom: 3rem;
+      font-size: 1rem;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* ── Team cards ── */
+    #join { background: var(--clr-bg); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px #0008;
+    }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background: var(--clr-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+    }
+
+    .card-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; gap: .75rem; }
+
+    .card-tag {
+      display: inline-block;
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .25rem .75rem;
+      border-radius: 50px;
+      background: #4f8ef718;
+      color: var(--clr-accent);
+      border: 1px solid #4f8ef740;
+      width: fit-content;
+    }
+    .card:nth-child(2) .card-tag { background: #a78bfa18; color: var(--clr-accent2); border-color: #a78bfa40; }
+    .card:nth-child(3) .card-tag { background: #34d39918; color: #34d399; border-color: #34d39940; }
+
+    .card h3 { font-size: 1.3rem; font-weight: 700; }
+    .card p { color: var(--clr-muted); font-size: .9rem; line-height: 1.6; flex: 1; }
+
+    .card-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: .5rem;
+    }
+    .skill-chip {
+      font-size: .72rem;
+      padding: .2rem .6rem;
+      border-radius: 4px;
+      background: var(--clr-surface);
+      color: var(--clr-muted);
+      border: 1px solid var(--clr-border);
+    }
+
+    /* ── Countdown ── */
+    #countdown {
+      background: var(--clr-surface);
+      border-top: 1px solid var(--clr-border);
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .countdown-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .countdown-timer {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    .t-label {
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--clr-accent);
+      letter-spacing: .05em;
+    }
+
+    .time-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      min-width: 80px;
+    }
+    .time-num {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1;
+      color: var(--clr-text);
+      letter-spacing: .04em;
+      transition: color .3s;
+    }
+    .time-num.tick { color: var(--clr-accent); }
+    .time-label {
+      font-size: .65rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--clr-muted);
+      margin-top: .4rem;
+    }
+    .colon {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 800;
+      color: var(--clr-muted);
+      padding-bottom: 1.2rem;
+    }
+
+    .countdown-cta { text-align: center; }
+    .countdown-cta p {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .countdown-cta span { color: var(--clr-accent); }
+
+    /* ── Contact ── */
+    #contact { background: var(--clr-bg); }
+    .contact-box {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      text-align: center;
+    }
+    .contact-box h3 { font-size: 1.5rem; margin-bottom: .75rem; }
+    .contact-box p { color: var(--clr-muted); margin-bottom: 1.5rem; font-size: .95rem; line-height: 1.6; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--clr-muted);
+      font-size: .8rem;
+      border-top: 1px solid var(--clr-border);
+    }
+
+    /* ── Scroll-reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal:nth-child(2) { transition-delay: .1s; }
+    .reveal:nth-child(3) { transition-delay: .2s; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav>
+  <a class="nav-logo" href="#"><span>⬡</span> Offenburg AeroSpace</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-drawer" id="drawer">
+  <span class="drawer-label">Navigate</span>
+  <a href="#join">Join the Team</a>
+  <a href="#countdown">Next Launch</a>
+  <a href="#contact">Contact</a>
+  <span class="drawer-label" style="margin-top:1.5rem">Our Launches</span>
+  <a href="launches/hab-01.html">HAB-01 &rarr; First flight</a>
+  <!-- add more launch entries here as you fly -->
+</div>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <!--
+    Replace .hero-bg with a real image later:
+    <img src="hero.jpg" class="hero-bg" style="object-fit:cover;width:100%;height:100%;position:absolute;inset:0;" />
+  -->
+  <div class="hero-content">
+    <p class="hero-eyebrow">We are earth &mdash; Offenburg</p>
+    <h1 class="hero-title">
+      Offenburg<br><span class="highlight">AeroSpace</span>
+    </h1>
+    <p class="hero-sub">
+      A student-run High-Altitude Balloon team building, launching, and learning from the edge of space.
+    </p>
+    <a href="#join" class="btn btn-primary">Join the mission</a>
+  </div>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    Scroll
+  </div>
+</section>
+
+<!-- ══════════════ TEAM CARDS ══════════════ -->
+<section id="join">
+  <div class="container">
+    <h2 class="section-title">Who are we looking for?</h2>
+    <p class="section-sub">Three disciplines. One team. Endless sky.</p>
+    <div class="cards">
+
+      <!-- Mechanics -->
+      <div class="card reveal">
+        <!-- replace the emoji div with: <img src="img/mechanics.jpg" class="card-img" alt="Mechanics" /> -->
+        <div class="card-img">⚙️</div>
+        <div class="card-body">
+          <span class="card-tag">Engineering</span>
+          <h3>Mechanics &amp; Mechatronics</h3>
+          <p>Design and build the gondola, payload structures, and recovery systems that keep our hardware alive from 30 km altitude back to the ground.</p>
+          <div class="card-skills">
+            <span class="skill-chip">CAD / SolidWorks</span>
+            <span class="skill-chip">3D Printing</span>
+            <span class="skill-chip">Materials</span>
+            <span class="skill-chip">Sensors</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Electronics -->
+      <div class="card reveal">
+        <div class="card-img">🔌</div>
+        <div class="card-body">
+          <span class="card-tag">Electronics</span>
+          <h3>Electronics</h3>
+          <p>Design PCBs, select components, and build the hardware stack that powers our onboard systems — power regulation, RF links, sensor boards, and more.</p>
+          <div class="card-skills">
+            <span class="skill-chip">PCB Design</span>
+            <span class="skill-chip">KiCad</span>
+            <span class="skill-chip">RF / LoRa</span>
+            <span class="skill-chip">Embedded HW</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Programming -->
+      <div class="card reveal">
+        <div class="card-img">💻</div>
+        <div class="card-body">
+          <span class="card-tag">Software</span>
+          <h3>Programming</h3>
+          <p>Write the firmware, ground station software, and data pipelines that turn raw sensor streams into real-time mission telemetry.</p>
+          <div class="card-skills">
+            <span class="skill-chip">Python</span>
+            <span class="skill-chip">C / C++</span>
+            <span class="skill-chip">Raspberry Pi</span>
+            <span class="skill-chip">Linux</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ COUNTDOWN ══════════════ -->
+<section id="countdown">
+  <div class="container">
+    <div class="countdown-wrap">
+      <div>
+        <h2 class="section-title">Next Launch</h2>
+        <p class="section-sub" id="launch-date-label">Loading launch date…</p>
+      </div>
+
+      <div class="countdown-timer" id="timer">
+        <span class="t-label">T&nbsp;&minus;</span>
+        <div class="time-block"><span class="time-num" id="cd-days">00</span><span class="time-label">Days</span></div>
+        <span class="colon">:</span>
+        <div class="time-block"><span class="time-num" id="cd-hrs">00</span><span class="time-label">Hours</span></div>
+        <span class="colon">:</span>
+        <div class="time-block"><span class="time-num" id="cd-min">00</span><span class="time-label">Min</span></div>
+        <span class="colon">:</span>
+        <div class="time-block"><span class="time-num" id="cd-sec">00</span><span class="time-label">Sec</span></div>
+      </div>
+
+      <div class="countdown-cta">
+        <p>Next Spaceflight — <span>with you?</span></p>
+        <a href="#contact" class="btn btn-primary">Get involved</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-box reveal">
+      <h3>Contact us</h3>
+      <p>Interested in joining the team, collaborating, or just want to know more about our missions? Drop us a message.</p>
+      <a href="mailto:team@offenburg-aerospace.de" class="btn btn-primary">Send us an email</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  &copy; 2026 Offenburg AeroSpace &mdash; Student HAB Team
+</footer>
+
+<script>
+  /* ── Hamburger ── */
+  const btn = document.getElementById('hamburger');
+  const drawer = document.getElementById('drawer');
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    drawer.classList.toggle('open');
+  });
+  // close on nav link click
+  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    btn.classList.remove('open');
+    drawer.classList.remove('open');
+  }));
+
+  /* ── Scroll-reveal ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  /* ── Countdown ── */
+  // SET YOUR NEXT LAUNCH DATE HERE (ISO 8601, local time or UTC Z)
+  const LAUNCH_DATE = new Date('2026-09-20T10:00:00');
+
+  let timerStarted = false;
+  let interval = null;
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    const now = new Date();
+    const diff = LAUNCH_DATE - now;
+    const label = document.getElementById('launch-date-label');
+
+    if (diff <= 0) {
+      label.textContent = '🚀 We have liftoff!';
+      document.getElementById('cd-days').textContent = '00';
+      document.getElementById('cd-hrs').textContent  = '00';
+      document.getElementById('cd-min').textContent  = '00';
+      document.getElementById('cd-sec').textContent  = '00';
+      clearInterval(interval);
+      return;
+    }
+
+    const days = Math.floor(diff / 86400000);
+    const hrs  = Math.floor((diff % 86400000) / 3600000);
+    const min  = Math.floor((diff % 3600000)  / 60000);
+    const sec  = Math.floor((diff % 60000)    / 1000);
+
+    const secEl = document.getElementById('cd-sec');
+    secEl.classList.remove('tick');
+    void secEl.offsetWidth; // reflow to re-trigger
+    secEl.classList.add('tick');
+    setTimeout(() => secEl.classList.remove('tick'), 300);
+
+    document.getElementById('cd-days').textContent = pad(days);
+    document.getElementById('cd-hrs').textContent  = pad(hrs);
+    document.getElementById('cd-min').textContent  = pad(min);
+    document.getElementById('cd-sec').textContent  = pad(sec);
+
+    label.textContent = `Target: ${LAUNCH_DATE.toLocaleDateString('en-GB', {day:'2-digit',month:'long',year:'numeric'})}`;
+  }
+
+  // start only when the countdown section scrolls into view
+  const countdownSection = document.getElementById('countdown');
+  const launchObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !timerStarted) {
+        timerStarted = true;
+        tick();
+        interval = setInterval(tick, 1000);
+        launchObs.unobserve(countdownSection);
+      }
+    });
+  }, { threshold: 0.2 });
+  launchObs.observe(countdownSection);
+</script>
+</body>
+</html>
