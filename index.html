@@ -178,13 +178,14 @@
     #join .container { position: relative; z-index: 1; }
 
     .cards {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;
     }
+    .card { flex: 0 1 320px; }
 
     .card {
-      background: rgba(19,17,30,.55);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(19,17,30,.28);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       border: 1px solid var(--border); border-radius: var(--r);
       overflow: hidden; display: flex; flex-direction: column;
       transition: border-color .3s, box-shadow .3s, transform .3s;
@@ -520,7 +521,7 @@
       id="hab-video"
       src="spaceengine_HAB.mp4"
       autoplay muted loop playsinline
-      style="width:100%; max-height:75vh; object-fit:cover; display:block; opacity:.85;"
+      style="width:100%; max-height:75vh; object-fit:cover; object-position:center top; display:block; opacity:.85;"
     ></video>
     <!-- top/bottom gradient fades -->
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,var(--bg) 0%,transparent 12%,transparent 88%,var(--bg) 100%);pointer-events:none;"></div>
@@ -649,7 +650,7 @@ document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
   const canvas = document.getElementById('stars-canvas');
   const ctx    = canvas.getContext('2d');
   const stars  = [];
-  const MAX    = 4; // fewer stars
+  const MAX    = 7;
 
   function resize() {
     const section = document.getElementById('join');
@@ -665,11 +666,11 @@ document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
     return {
       x:       Math.random() * canvas.width,
       y:       Math.random() * canvas.height * 0.6,
-      len:     Math.random() * 70 + 50,
+      len:     Math.random() * 100 + 70,
       speed,
       dx:      Math.cos(angle) * speed,
       dy:      Math.sin(angle) * speed,
-      peakA:   Math.random() * 0.35 + 0.2, // max alpha at peak
+      peakA:   Math.random() * 0.45 + 0.25,
       life:    0,
       maxLife: Math.random() * 55 + 35,
     };
@@ -705,13 +706,13 @@ document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
       ctx.moveTo(tailX, tailY);
       ctx.lineTo(s.x, s.y);
       ctx.strokeStyle = grad;
-      ctx.lineWidth   = a > 0.15 ? 1.8 : 1;
+      ctx.lineWidth   = a > 0.15 ? 2.4 : 1.2;
       ctx.stroke();
 
       // small bright glow dot at tip
       if (a > 0.1) {
         ctx.beginPath();
-        ctx.arc(s.x, s.y, 1.2, 0, Math.PI * 2);
+        ctx.arc(s.x, s.y, 1.8, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255,245,210,${a * 0.7})`;
         ctx.fill();
       }
