@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Team — Offenburg Aerospace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #09080d; --surface: #100f18; --card: #13111e;
+      --border: #26233a; --border-hi: #3d3860;
+      --gold: #f0a832; --sky: #5bbde4;
+      --text: #d8d4c8; --bright: #f0ede4; --muted: #524e68;
+      --mono: 'Share Tech Mono', monospace;
+      --cond: 'Barlow Condensed', sans-serif;
+      --body: 'Barlow', system-ui, sans-serif;
+      --nav-h: 62px; --r: 10px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body); background: var(--bg); color: var(--text); overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: radial-gradient(circle, rgba(240,168,50,.06) 1px, transparent 1px);
+      background-size: 44px 44px; pointer-events: none; z-index: 0;
+    }
+
+    /* ── nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(9,8,13,.82); backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border); z-index: 200;
+    }
+    .nav-logo { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
+    .nav-logo img { height: 28px; filter: brightness(0) invert(1); opacity: .85; }
+    .nav-logo-text { font-family: var(--mono); font-size: .78rem; letter-spacing: .1em; color: var(--gold); }
+    .nav-back {
+      font-family: var(--mono); font-size: .75rem; letter-spacing: .1em;
+      color: var(--muted); text-decoration: none;
+      padding: .4rem .9rem; border: 1px solid var(--border); border-radius: 50px;
+      transition: color .15s, border-color .15s;
+    }
+    .nav-back:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* ── page hero ── */
+    .page-hero {
+      position: relative; z-index: 1;
+      padding: calc(var(--nav-h) + 5rem) 1.5rem 4rem;
+      max-width: 860px; margin: 0 auto; text-align: center;
+    }
+    .page-eyebrow {
+      font-family: var(--mono); font-size: .7rem; letter-spacing: .25em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 1rem; opacity: .85;
+    }
+    .page-title {
+      font-family: var(--cond); font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 900; text-transform: uppercase; letter-spacing: -.01em;
+      color: var(--bright); margin-bottom: 1rem;
+      text-shadow: 0 0 60px rgba(240,168,50,.15);
+    }
+    .page-title span { color: var(--gold); }
+    .page-subtitle {
+      font-size: clamp(.9rem, 2vw, 1.05rem); font-weight: 300;
+      color: var(--text); opacity: .55; max-width: 480px; margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── team grid ── */
+    .team-section {
+      position: relative; z-index: 1;
+      padding: 2rem 1.5rem 6rem;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .team-grid {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem;
+    }
+
+    /* ── member card ── */
+    .member-card {
+      flex: 0 1 320px;
+      background: rgba(19,17,30,.28);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid var(--border); border-radius: var(--r);
+      overflow: hidden; display: flex; flex-direction: column;
+      transition: border-color .3s, box-shadow .3s, transform .3s;
+    }
+    .member-card:hover {
+      border-color: var(--border-hi);
+      box-shadow: 0 0 0 1px var(--border-hi), 0 24px 48px rgba(0,0,0,.5);
+      transform: translateY(-5px);
+    }
+
+    /* photo slot */
+    .member-photo {
+      position: relative; width: 100%; aspect-ratio: 3/4;
+      background: var(--surface); overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .member-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(.7) saturate(.6) sepia(.15);
+      transition: filter .4s, transform .5s;
+    }
+    .member-card:hover .member-photo img {
+      filter: brightness(.85) saturate(.85) sepia(.08);
+      transform: scale(1.04);
+    }
+
+    /* placeholder shown when no img */
+    .member-photo-placeholder {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: .75rem;
+      width: 100%; height: 100%;
+      color: var(--border-hi); font-family: var(--mono);
+      font-size: .65rem; letter-spacing: .12em; text-align: center;
+    }
+    .member-photo-placeholder svg {
+      width: 52px; height: 52px; stroke: var(--border-hi);
+      fill: none; stroke-width: 1.2; opacity: .5;
+    }
+    .member-photo-placeholder span { opacity: .5; }
+
+    /* gradient over photo */
+    .member-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(9,8,13,.05) 0%,
+        rgba(9,8,13,.05) 50%,
+        rgba(9,8,13,.7)  90%,
+        rgba(9,8,13,.9) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* name overlaid on photo */
+    .member-name-overlay {
+      position: absolute; bottom: .9rem; left: 1rem; right: 1rem; z-index: 2;
+      font-family: var(--cond); font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 900; text-transform: uppercase; letter-spacing: .04em;
+      color: var(--bright); line-height: 1;
+      text-shadow: 0 2px 12px rgba(0,0,0,.8);
+    }
+
+    /* card body */
+    .member-body {
+      padding: 1.2rem 1.5rem 1.5rem;
+      display: flex; flex-direction: column; gap: .6rem;
+    }
+    .member-role {
+      font-family: var(--mono); font-size: .68rem; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .member-bio {
+      font-size: .87rem; line-height: 1.65; color: var(--text); opacity: .6;
+      font-weight: 300;
+    }
+    .member-discipline {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-family: var(--mono); font-size: .63rem; letter-spacing: .08em;
+      padding: .25rem .65rem; border-radius: 50px;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); margin-top: .2rem; align-self: flex-start;
+    }
+    .discipline-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* discipline colours */
+    .member-card:nth-child(1) .member-role        { color: var(--gold); }
+    .member-card:nth-child(1) .discipline-dot     { background: var(--gold); }
+    .member-card:nth-child(2) .member-role        { color: var(--sky); }
+    .member-card:nth-child(2) .discipline-dot     { background: var(--sky); }
+    .member-card:nth-child(3) .member-role        { color: #9be8a0; }
+    .member-card:nth-child(3) .discipline-dot     { background: #9be8a0; }
+
+    /* ── reveal ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal:nth-child(2) { transition-delay: .1s; }
+    .reveal:nth-child(3) { transition-delay: .2s; }
+
+    /* ── footer ── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border); padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: .75rem;
+    }
+    .footer-logo { display: flex; align-items: center; gap: .75rem; }
+    .footer-logo img { height: 22px; filter: brightness(0) invert(1); opacity: .35; }
+    .footer-copy { font-family: var(--mono); font-size: .68rem; color: var(--muted); }
+
+    /* ── mobile ── */
+    @media (max-width: 540px) {
+      .page-hero { padding-top: calc(var(--nav-h) + 3rem); }
+      .member-card { flex: 0 1 100%; max-width: 380px; }
+      .member-photo { aspect-ratio: 4/5; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="img/HSO_Logo_Quer_RGB_positiv.svg.png" alt="HSO" onerror="this.style.display='none'">
+    <span class="nav-logo-text">OFFENBURG AEROSPACE</span>
+  </a>
+  <a class="nav-back" href="index.html">← Back</a>
+</nav>
+
+<div class="page-hero">
+  <p class="page-eyebrow">// The humans behind the mission</p>
+  <h1 class="page-title">Our <span>Team</span></h1>
+  <p class="page-subtitle">
+    Different origins, one mission.
+  </p>
+</div>
+
+<div class="team-section">
+  <div class="container">
+    <div class="team-grid">
+
+      <!-- Member 1 -->
+      <div class="member-card reveal">
+        <div class="member-photo">
+          <!-- Replace the placeholder below with: <img src="../img/your-photo.jpg" alt="Name"> -->
+          <div class="member-photo-placeholder">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span>// Photo placeholder</span>
+          </div>
+          <span class="member-name-overlay">Dragos Saracsan</span>
+        </div>
+        <div class="member-body">
+          <span class="member-role">// Team Leader</span>
+          <p class="member-bio">Short bio — what you study, what you build on the team, what drives you. 2–3 sentences max.</p>
+          <span class="member-discipline">
+            <span class="discipline-dot"></span>
+            Team-Leader
+          </span>
+        </div>
+      </div>
+
+      <!-- Member 2 -->
+      <div class="member-card reveal">
+        <div class="member-photo">
+          <div class="member-photo-placeholder">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span>// Photo placeholder</span>
+          </div>
+          <span class="member-name-overlay">Andrea Seigel</span>
+        </div>
+        <div class="member-body">
+          <span class="member-role">// Co-Leader</span>
+          <p class="member-bio">Short bio — what you study, what you build on the team, what drives you. 2–3 sentences max.</p>
+          <span class="member-discipline">
+            <span class="discipline-dot"></span>
+            Discipline
+          </span>
+        </div>
+      </div>
+
+      <!-- Member 3 -->
+      <div class="member-card reveal">
+        <div class="member-photo">
+          <div class="member-photo-placeholder">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span>// Photo placeholder</span>
+          </div>
+          <span class="member-name-overlay">Louis Schicker</span>
+        </div>
+        <div class="member-body">
+          <span class="member-role">// Embedded Systems</span>
+          <p class="member-bio">I study mechanical engineering in fourth semester. Currently working on every hardware part and responsible for all embedded systems.</p>
+          <span class="member-discipline">
+            <span class="discipline-dot"></span>
+            Embedded Systems
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">
+    <img src="img/HSO_Logo_Quer_RGB_positiv.svg.png" alt="HSO" onerror="this.style.display='none'">
+    <span class="footer-copy">OFFENBURG AEROSPACE</span>
+  </div>
+  <span class="footer-copy">&copy; 2026 — Made on Earth by Humans</span>
+</footer>
+
+<script>
+const revObs = new IntersectionObserver(entries =>
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); } }),
+  { threshold: .12 }
+);
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+</script>
+</body>
+</html>

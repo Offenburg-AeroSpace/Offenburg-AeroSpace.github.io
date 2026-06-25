@@ -261,6 +261,8 @@
     .card:nth-child(1) .card-img-title { color: var(--gold); }
     .card:nth-child(2) .card-img-title { color: var(--sky); }
     .card:nth-child(3) .card-img-title { color: #9be8a0; }
+    .card:nth-child(4) .card-img-title { color: #34d399; }
+    .card:nth-child(5) .card-img-title { color: #a78bfa; }
 
     .card-body {
       padding: 1.2rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; gap: .7rem;
@@ -403,6 +405,7 @@
 <div class="nav-drawer" id="drawer">
   <span class="drawer-label">Navigate</span>
   <a href="#join">Join the Team</a>
+  <a href="team.html">Our Team</a>
   <a href="launches/next-launch.html">Next Launch</a>
   <a href="#launch">Contact</a>
   <span class="drawer-label">Our Launches</span>
@@ -453,7 +456,7 @@
           <span class="card-img-title">Mechanics &amp;<br>Mechatronics</span>
         </div>
         <div class="card-body">
-          <span class="card-num">01 / 03</span>
+          <span class="card-num">01 / 05</span>
           <h3>Mechanics &amp; Mechatronics</h3>
           <p>Design and build the capsule, payload structure, and recovery system. You take hardware from sketch to launch-ready.</p>
           <div class="card-skills">
@@ -472,7 +475,7 @@
           <span class="card-img-title">Electronics</span>
         </div>
         <div class="card-body">
-          <span class="card-num">02 / 03</span>
+          <span class="card-num">02 / 05</span>
           <h3>Electronics</h3>
           <p>Design the PCBs and hardware stack that survive −60 °C at 30 km altitude and over — power, RF links, GPS, and sensor boards that bring our systems online.</p>
           <div class="card-skills">
@@ -491,7 +494,7 @@
           <span class="card-img-title">Programming</span>
         </div>
         <div class="card-body">
-          <span class="card-num">03 / 03</span>
+          <span class="card-num">03 / 05</span>
           <h3>Programming</h3>
           <p>Write the firmware, ground control software, and telemetry pipelines that turn raw sensor data into real-time mission insight.</p>
           <div class="card-skills">
@@ -507,11 +510,11 @@
 
       <div class="card reveal">
         <div class="card-img-wrap">
-          <img src="img/Screenshot 2026-06-23 204323.png" alt="Flight software code">
+          <img src="img/Screenshot 2026-06-23 204323.png" alt="Biology">
           <span class="card-img-title">Biology</span>
         </div>
         <div class="card-body">
-          <span class="card-num">03 / 03</span>
+          <span class="card-num">04 / 05</span>
           <h3>Biology</h3>
           <p>You are responsible for the HAB's experimental payload. Observe microorganisms such as fungi, sprouts, bacteria and co under the harsh conditions of space.</p>
           <div class="card-skills">
@@ -524,11 +527,11 @@
 
       <div class="card reveal">
         <div class="card-img-wrap">
-          <img src="img/Screenshot 2026-06-23 204323.png" alt="Flight software code">
+          <img src="img/Screenshot 2026-06-23 204323.png" alt="Media&Logistics">
           <span class="card-img-title">Media and Logistics</span>
         </div>
         <div class="card-body">
-          <span class="card-num">03 / 03</span>
+          <span class="card-num">05 / 05</span>
           <h3>Media and logistics</h3>
           <p>You document the whole project for PR as well as organize the start with authorities</p>
           <div class="card-skills">
@@ -690,13 +693,14 @@ document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
   }
   resize();
   window.addEventListener('resize', resize);
+  new ResizeObserver(resize).observe(document.getElementById('join'));
 
   function randomStar() {
     const angle = (Math.random() * 25 + 10) * (Math.PI / 180);
     const speed = Math.random() * 2.5 + 1.5;
     return {
       x:       Math.random() * canvas.width,
-      y:       Math.random() * canvas.height * 0.6,
+      y:       Math.random() * canvas.height,
       len:     Math.random() * 100 + 70,
       speed,
       dx:      Math.cos(angle) * speed,
